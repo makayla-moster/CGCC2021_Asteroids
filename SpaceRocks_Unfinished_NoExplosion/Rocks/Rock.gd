@@ -1,5 +1,7 @@
 extends RigidBody2D
 
+signal exploded()
+
 var screensize = Vector2()
 var size 
 var radius 
@@ -28,3 +30,10 @@ func _integrate_forces(physics_state):
 	if xform.origin.y < 0 - radius:
 		xform.origin.y = screensize.y + radius
 	physics_state.set_transform(xform)
+
+func explode():
+	layers = 0
+	$Sprite.hide()
+	emit_signal("exploded", size, radius, position, linear_velocity)
+	linear_velocity = Vector2()
+	angular_velocity = 0
