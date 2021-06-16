@@ -18,6 +18,8 @@ func start(pos, vel, _size):
 	$CollisionShape2D.shape = shape 
 	linear_velocity = vel 
 	angular_velocity = rand_range(-1.5, 1.5)
+	$Explosion.hide()  # hides the explosion from view initially
+	$Explosion.scale = Vector2(0.75, 0.75) * size # scales the explosion to be the same as the asteroid
 
 func _integrate_forces(physics_state):
 	var xform = physics_state.get_transform()
@@ -34,6 +36,12 @@ func _integrate_forces(physics_state):
 func explode():
 	layers = 0
 	$Sprite.hide()
+	$Explosion.show()  #shows our explosion
+	$Explosion/AnimationPlayer.play("explosion") # plays the explosion
 	emit_signal("exploded", size, radius, position, linear_velocity)
 	linear_velocity = Vector2()
 	angular_velocity = 0
+
+
+func _on_AnimationPlayer_animation_finished(anim_name):
+	queue_free() # removes the rocks from the screen
