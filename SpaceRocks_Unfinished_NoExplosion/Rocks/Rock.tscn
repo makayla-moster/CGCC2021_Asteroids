@@ -3,7 +3,9 @@
 [ext_resource path="res://assets/rock.png" type="Texture" id=1]
 [ext_resource path="res://Rocks/Rock.gd" type="Script" id=2]
 
-[node name="Rock" type="RigidBody2D"]
+[node name="Rock" type="RigidBody2D" groups=[
+"rocks",
+]]
 linear_damp = 0.0
 angular_damp = 0.0
 script = ExtResource( 2 )
